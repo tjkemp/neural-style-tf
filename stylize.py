@@ -165,10 +165,7 @@ def parse_args():
     args.style_imgs_weights = utils.normalize(args.style_imgs_weights)
 
     # create directories for output
-    if args.video:
-        utils.maybe_make_directory(args.video_output_dir)
-    else:
-        utils.maybe_make_directory(args.img_output_dir)
+    utils.maybe_make_directory(args.img_output_dir)
 
     return args
 

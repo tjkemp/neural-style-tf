@@ -36,13 +36,6 @@ def stylize(content_img, style_imgs, init_img, parameters, frame=None):
         L_total += beta * L_style
         L_total += theta * L_tv
 
-        # video temporal loss
-        #if parameters.video and frame > 1:
-        #    gamma = parameters.temporal_weight
-        #    L_temporal = loss.sum_shortterm_temporal_losses(
-        #        sess, net, frame, init_img)
-        #    L_total += gamma * L_temporal
-
         # optimization algorithm
         optimizer = get_optimizer(L_total, parameters)
 
