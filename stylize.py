@@ -2,6 +2,7 @@ import os
 import time
 import struct
 import argparse
+import itertools
 
 from neuralstyle import utils, image
 
@@ -23,9 +24,11 @@ def parse_args():
                         default='result',
                         help='Filename of the output image.')
 
+    parser.add_argument('--batch', action='store_true',
+                        help='Stylize all images in input directory with all images in style directory.')
+
     parser.add_argument('--style_imgs', nargs='+', type=str,
-                        help='Filenames of the style images (example: starry-night.jpg)',
-                        required=True)
+                        help='Filenames of the style images (example: starry-night.jpg)')
 
     parser.add_argument('--style_imgs_weights', nargs='+', type=float,
                         default=[1.0],
@@ -173,14 +176,30 @@ def parse_args():
 def main():
     args = parse_args()
 
-    image.render_single_image(
-        args.init_img_type,
-        args.content_img_dir,
-        args.content_img,
-        args.style_imgs_dir,
-        args.style_imgs,
-        args,
-        args.max_size)
+    if args.batch:
+        content_images = os.listdir(args.content_img_dir)
+        style_images = os.listdir(args.style_imgs_dir)
+        images_to_render = [(pair[0], pair[1]) for pair in itertools.product(content_images, style_images)]
+
+        for content_img, style_img in images_to_render:
+            image.render_single_image(
+                args.init_img_type,
+                args.content_img_dir,
+                content_img,
+                args.style_imgs_dir,
+                [style_img],
+                args,
+                args.max_size)
+
+    else:
+        image.render_single_image(
+            args.init_img_type,
+            args.content_img_dir,
+            args.content_img,
+            args.style_imgs_dir,
+            args.style_imgs,
+            args,
+            args.max_size)
 
 
 if __name__ == '__main__':
