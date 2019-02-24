@@ -157,69 +157,6 @@ def parse_args():
                         default=50,
                         help='Number of iterations between optimizer print statements. (default: %(default)s)')
 
-    # options for video frames
-    parser.add_argument('--video', action='store_true',
-                        help='Boolean flag indicating if the user is generating a video.')
-
-    parser.add_argument('--start_frame', type=int,
-                        default=1,
-                        help='First frame number.')
-
-    parser.add_argument('--end_frame', type=int,
-                        default=1,
-                        help='Last frame number.')
-
-    parser.add_argument('--first_frame_type', type=str,
-                        choices=['random', 'content', 'style'],
-                        default='content',
-                        help='Image used to initialize the network during the rendering of the first frame.')
-
-    parser.add_argument('--init_frame_type', type=str,
-                        choices=[
-                            'prev_warped',
-                            'prev',
-                            'random',
-                            'content',
-                            'style'],
-                        default='prev_warped',
-                        help='Image used to initialize the network during the every rendering after the first frame.')
-
-    parser.add_argument('--video_input_dir', type=str,
-                        default='video_input',
-                        help='Relative or absolute directory path to input frames.')
-
-    parser.add_argument('--video_output_dir', type=str,
-                        default='video_output',
-                        help='Relative or absolute directory path to output frames.')
-
-    parser.add_argument('--content_frame_frmt', type=str,
-                        default='frame_{}.ppm',
-                        help='Filename format of the input content frames.')
-
-    parser.add_argument('--backward_optical_flow_frmt', type=str,
-                        default='backward_{}_{}.flo',
-                        help='Filename format of the backward optical flow files.')
-
-    parser.add_argument('--forward_optical_flow_frmt', type=str,
-                        default='forward_{}_{}.flo',
-                        help='Filename format of the forward optical flow files')
-
-    parser.add_argument('--content_weights_frmt', type=str,
-                        default='reliable_{}_{}.txt',
-                        help='Filename format of the optical flow consistency files.')
-
-    parser.add_argument('--prev_frame_indices', nargs='+', type=int,
-                        default=[1],
-                        help='Previous frames to consider for longterm temporal consistency.')
-
-    parser.add_argument('--first_frame_iterations', type=int,
-                        default=2000,
-                        help='Maximum number of optimizer iterations of the first frame. (default: %(default)s)')
-
-    parser.add_argument('--frame_iterations', type=int,
-                        default=800,
-                        help='Maximum number of optimizer iterations for each frame after the first frame. (default: %(default)s)')
-
     args = parser.parse_args()
 
     # normalize weights
@@ -237,13 +174,16 @@ def parse_args():
 
 
 def main():
-    global args
     args = parse_args()
-    if args.video:
-        #render_video()
-        print("Video rendering disabled for now")
-    else:
-        image.render_single_image(args.init_img_type, args.content_img_dir, args.content_img, args.style_imgs_dir, args.style_imgs, args, args.max_size)
+
+    image.render_single_image(
+        args.init_img_type,
+        args.content_img_dir,
+        args.content_img,
+        args.style_imgs_dir,
+        args.style_imgs,
+        args,
+        args.max_size)
 
 
 if __name__ == '__main__':
