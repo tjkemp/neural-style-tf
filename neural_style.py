@@ -1,12 +1,12 @@
-import tensorflow as tf
-import numpy as np
-import scipy.io
-import argparse
+import os
+import time
 import struct
 import errno
-import time
+import argparse
+import numpy as np
+import scipy.io
+import tensorflow as tf
 import cv2
-import os
 
 '''
   parsing and configuration
