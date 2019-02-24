@@ -99,6 +99,42 @@ def check_image(img, path):
 
 
 def write_image_output(output_img, content_img, style_imgs, init_img, params):
+    """ Write output image to file. """
+
+    out_dir = os.path.join(params.img_output_dir, params.img_name)
+    maybe_make_directory(out_dir)
+
+    filename = params.content_img + "__" + params.style_imgs[0]
+    img_path = os.path.join(out_dir, filename + '.png')
+    write_image(img_path, output_img)
+
+    # save the configuration settings
+    out_file = os.path.join(out_dir, filename + '.txt')
+    f = open(out_file, 'w')
+    f.write('image_name: {}\n'.format(params.img_name))
+    f.write('content: {}\n'.format(params.content_img))
+    index = 0
+    for style_img, weight in zip(params.style_imgs, params.style_imgs_weights):
+        f.write('styles[' + str(index) +
+                ']: {} * {}\n'.format(weight, style_img))
+        index += 1
+    index = 0
+    if params.style_mask_imgs is not None:
+        for mask in params.style_mask_imgs:
+            f.write('style_masks[' + str(index) + ']: {}\n'.format(mask))
+            index += 1
+    f.write('init_type: {}\n'.format(params.init_img_type))
+    f.write('content_weight: {}\n'.format(params.content_weight))
+    f.write('style_weight: {}\n'.format(params.style_weight))
+    f.write('tv_weight: {}\n'.format(params.tv_weight))
+    f.write('content_layers: {}\n'.format(params.content_layers))
+    f.write('style_layers: {}\n'.format(params.style_layers))
+    f.write('optimizer_type: {}\n'.format(params.optimizer))
+    f.write('max_iterations: {}\n'.format(params.max_iterations))
+    f.write('max_image_size: {}\n'.format(params.max_size))
+    f.close()
+
+def debug_write_image_output(output_img, content_img, style_imgs, init_img, params):
     out_dir = os.path.join(params.img_output_dir, params.img_name)
     maybe_make_directory(out_dir)
     img_path = os.path.join(out_dir, params.img_name + '.png')
@@ -111,7 +147,7 @@ def write_image_output(output_img, content_img, style_imgs, init_img, params):
     index = 0
     for style_img in style_imgs:
         path = os.path.join(out_dir, 'style_' + str(index) + '.png')
-        utils.write_image(path, style_img)
+        write_image(path, style_img)
         index += 1
 
     # save the configuration settings
