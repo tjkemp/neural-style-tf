@@ -60,12 +60,7 @@ def stylize(content_img, style_imgs, init_img, parameters, frame=None):
 
         print("stage 3")
 
-        if parameters.video:
-            #write_video_output(frame, output_img)
-            # TODO: fix this
-            raise Exception("Video processing not implemented right now")
-        else:
-            utils.write_image_output(output_img, content_img, style_imgs, init_img, parameters)
+        utils.write_image_output(output_img, content_img, style_imgs, init_img, parameters)
 
         print("stage 4")
 
