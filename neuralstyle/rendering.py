@@ -2,7 +2,7 @@ import os
 import numpy as np
 import tensorflow as tf
 
-from neuralstyle import model, neural, utils, loss, image
+from neuralstyle import model, neural, utils, image
 
 '''
   rendering -- where the magic happens
