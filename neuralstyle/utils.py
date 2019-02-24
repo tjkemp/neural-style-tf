@@ -100,14 +100,14 @@ def check_image(img, path):
 
 def write_image_output(output_img, content_img, style_imgs, init_img, params):
     out_dir = os.path.join(params.img_output_dir, params.img_name)
-    utils.maybe_make_directory(out_dir)
+    maybe_make_directory(out_dir)
     img_path = os.path.join(out_dir, params.img_name + '.png')
     content_path = os.path.join(out_dir, 'content.png')
     init_path = os.path.join(out_dir, 'init.png')
 
-    utils.write_image(img_path, output_img)
-    utils.write_image(content_path, content_img)
-    utils.write_image(init_path, init_img)
+    write_image(img_path, output_img)
+    write_image(content_path, content_img)
+    write_image(init_path, init_img)
     index = 0
     for style_img in style_imgs:
         path = os.path.join(out_dir, 'style_' + str(index) + '.png')
