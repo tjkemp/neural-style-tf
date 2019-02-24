@@ -44,18 +44,12 @@ def stylize(content_img, style_imgs, init_img, parameters, frame=None):
         elif parameters.optimizer == 'lbfgs':
             minimize_with_lbfgs(sess, net, optimizer, init_img)
 
-        print("stage 1")
         output_img = sess.run(net['input'])
-        print("stage 2")
 
         if parameters.original_colors:
             output_img = image.convert_to_original_colors(np.copy(content_img), output_img, parameters.color_convert_type)
 
-        print("stage 3")
-
         utils.write_image_output(output_img, content_img, style_imgs, init_img, parameters)
-
-        print("stage 4")
 
 
 def minimize_with_lbfgs(sess, net, optimizer, init_img):

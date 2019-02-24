@@ -19,14 +19,6 @@ def get_init_image(init_type, content_img, style_imgs, noise_ratio, frame=None):
         # TODO: noise_Ratio only needed for random
         init_img = get_noise_image(noise_ratio, content_img)
         return init_img
-    # only for video frames
-    # TODO: video stuff
-    #elif init_type == 'prev':
-    #    init_img = get_prev_frame(frame)
-    #    return init_img
-    #elif init_type == 'prev_warped':
-    #    init_img = get_prev_warped_frame(frame)
-    #    return init_img
 
 def get_content_image(content_img_dir, content_img_name, max_size):
     """ Reads and preprocesses content image. 
