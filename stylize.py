@@ -187,7 +187,7 @@ def main():
                 args.content_img_dir,
                 content_img,
                 args.style_imgs_dir,
-                [style_img],
+                style_img,
                 args,
                 args.max_size)
 
