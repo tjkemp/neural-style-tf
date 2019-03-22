@@ -133,12 +133,10 @@ def render_single_image(init_img_type, content_img_dir, content_img, style_img_d
     style_imgs = get_style_images(content_img, style_img_dir, style_imgs)
 
     with tf.Graph().as_default():
-        print('\n---- RENDERING SINGLE IMAGE ----\n')
-
         init_img = get_init_image(init_img_type, content_img, style_imgs, parameters.noise_ratio)
 
         tick = time.time()
         rendering.stylize(content_img, style_imgs, init_img, parameters)
         tock = time.time()
 
-        print('Single image elapsed time: {}'.format(tock - tick))
+        print('Elapsed time for a single image: {}'.format(tock - tick))

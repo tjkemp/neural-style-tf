@@ -72,13 +72,11 @@ def minimize_with_adam(sess, net, optimizer, init_img, loss, max_iterations):
     while (iterations < max_iterations):
         print("iteration {}/{} started".format(iterations, max_iterations))
         sess.run(train_op)
-        print("iteration finished")
         # TODO: do something about verbose
         # TODO: args.print_iterations hard coded to 10
         #if iterations % args.print_iterations == 0 and args.verbose:
         #if iterations % 10 == 0:
         curr_loss = loss.eval()
-        print("loss evaluated")
         print("At iterate {}\tf=  {}".format(iterations, curr_loss))
         iterations += 1
 

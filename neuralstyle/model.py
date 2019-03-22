@@ -17,13 +17,10 @@ def build_model(input_img, parameters):
     net = {}
     _, h, w, d = input_img.shape
 
-    print('loading model weights...')
     vgg_rawnet = sio.loadmat(parameters.model_weights)
     vgg_layers = vgg_rawnet['layers'][0]
-    print('constructing layers...')
     net['input'] = tf.Variable(np.zeros((1, h, w, d), dtype=np.float32))
 
-    print('LAYER GROUP 1')
     net['conv1_1'] = conv_layer(
         'conv1_1',
         net['input'],
@@ -46,7 +43,6 @@ def build_model(input_img, parameters):
 
     net['pool1'] = pool_layer('pool1', net['relu1_2'], pooling_type)
 
-    print('LAYER GROUP 2')
     net['conv2_1'] = conv_layer(
         'conv2_1',
         net['pool1'],
@@ -69,7 +65,6 @@ def build_model(input_img, parameters):
 
     net['pool2'] = pool_layer('pool2', net['relu2_2'], pooling_type)
 
-    print('LAYER GROUP 3')
     net['conv3_1'] = conv_layer(
         'conv3_1',
         net['pool2'],
@@ -112,7 +107,6 @@ def build_model(input_img, parameters):
 
     net['pool3'] = pool_layer('pool3', net['relu3_4'], pooling_type)
 
-    print('LAYER GROUP 4')
     net['conv4_1'] = conv_layer(
         'conv4_1',
         net['pool3'],
@@ -155,7 +149,6 @@ def build_model(input_img, parameters):
 
     net['pool4'] = pool_layer('pool4', net['relu4_4'], pooling_type)
 
-    print('LAYER GROUP 5')
     net['conv5_1'] = conv_layer(
         'conv5_1',
         net['pool4'],
@@ -203,15 +196,11 @@ def build_model(input_img, parameters):
 
 def conv_layer(layer_name, layer_input, W):
     conv = tf.nn.conv2d(layer_input, W, strides=[1, 1, 1, 1], padding='SAME')
-    print('--{} | shape={} | weights_shape={}'.format(layer_name,
-                                                          conv.get_shape(), W.get_shape()))
     return conv
 
 
 def relu_layer(layer_name, layer_input, b):
     relu = tf.nn.relu(layer_input + b)
-    print('--{} | shape={} | bias_shape={}'.format(layer_name, relu.get_shape(),
-                                                       b.get_shape()))
     return relu
 
 
@@ -222,7 +211,6 @@ def pool_layer(layer_name, layer_input, pooling_type):
     elif pooling_type == 'max':
         pool = tf.nn.max_pool(layer_input, ksize=[1, 2, 2, 1],
                               strides=[1, 2, 2, 1], padding='SAME')
-    print('--{}   | shape={}'.format(layer_name, pool.get_shape()))
     return pool
 
 
