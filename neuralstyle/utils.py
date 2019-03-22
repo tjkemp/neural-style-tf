@@ -104,7 +104,10 @@ def write_image_output(output_img, content_img, style_imgs, init_img, params):
     out_dir = os.path.join(params.img_output_dir, params.img_name)
     maybe_make_directory(out_dir)
 
-    filename = params.content_img + "__" + params.style_imgs[0]
+    contentname = params.content_img.split(".")[0]
+    stylename = params.style_imgs[0].split(".")[0]
+
+    filename = contentname + "__" + stylename
     img_path = os.path.join(out_dir, filename + '.png')
     write_image(img_path, output_img)
 

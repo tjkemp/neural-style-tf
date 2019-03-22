@@ -180,14 +180,17 @@ def main():
         content_images = os.listdir(args.content_img_dir)
         style_images = os.listdir(args.style_imgs_dir)
         images_to_render = [(pair[0], pair[1]) for pair in itertools.product(content_images, style_images)]
+        print(images_to_render)
 
         for content_img, style_img in images_to_render:
+            args.content_img = content_img
+            args.style_imgs = [style_img]
             image.render_single_image(
                 args.init_img_type,
                 args.content_img_dir,
                 content_img,
                 args.style_imgs_dir,
-                style_img,
+                [style_img],
                 args,
                 args.max_size)
 
