@@ -129,8 +129,18 @@ def render_single_image(init_img_type, content_img_dir, content_img, style_img_d
     style imgs -- ?
     maxsize -- maximum size of image ?
     """
-    content_img = get_content_image(content_img_dir, content_img, max_size)
-    style_imgs = get_style_images(content_img, style_img_dir, style_imgs)
+    # TODO: implement more helpful error handling for default images and directories
+    try:
+        content_img = get_content_image(content_img_dir, content_img, max_size)
+    except TypeError:
+        print("Could not find content image {} from {}, skipping".format(content_img, content_img_dir))
+        return
+
+    try:
+        style_imgs = get_style_images(content_img, style_img_dir, style_imgs)
+    except TypeError:
+        print("Could not find style image {} from {}, skipping".format(style_imgs[0], style_img_dir))
+        return
 
     with tf.Graph().as_default():
         init_img = get_init_image(init_img_type, content_img, style_imgs, parameters.noise_ratio)
